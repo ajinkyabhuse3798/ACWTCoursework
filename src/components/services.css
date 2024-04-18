@@ -1,0 +1,39 @@
+services-page {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .service-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .service-item {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-item h2 {
+    color: #004a99;
+  }
+  
+  button {
+    background-color: #74ebd5;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    margin-top: 1rem;
+  }
+  
+  button:hover {
+    background-color: #68d7c7;
+  }
