@@ -1,0 +1,117 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+/* -_-_-_-_-_-_-_-_-_-_ Headings _-_-_-_-_-_-_-_-_-_- */
+h1, h2, h3, h4, h5 {
+    font-family: "Roboto Condensed", sans-serif;
+}
+p {
+    font-family: "Montserrat", sans-serif;
+}
+.header-title {
+    font-family: "Roboto Condensed", sans-serif;
+}
+a {
+    font-family: "Montserrat", sans-serif;
+}
+
+/* -_-_-_-_-_-_-_-_-_-_ Sticky Footer  _-_-_-_-_-_-_-_-_-_- */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* -_-_-_-_-_-_-_-_-_-_ Title _-_-_-_-_-_-_-_-_-_- */
+.header-title {
+    font-size: 20px;
+    padding-left: 10px;
+}
+.fa-car {
+    font-size: 20px; 
+    padding-left: 10px;
+}
+@media(min-width: 992px) {
+    .header-title {
+        font-size: 30px;
+        padding-left: 10px;
+    }
+    .fa-car {
+        font-size: 30px; 
+        padding-left: 10px;
+    }
+}
+
+/* Change header and footer background colors */
+nav, footer {
+    background-color: #ff4500; /* New color for header and footer */
+}
+
+/* -_-_-_-_-_-_-_-_-_-_ Buttons _-_-_-_-_-_-_-_-_-_- */
+.btn:hover {
+    background-color: #006400 !important; /* Dark green for button hover */
+}
+.detailed_record_button {
+    min-width: 80%;
+    border-radius: 8px;
+}
+.edit_record_button {
+    border-radius: 8px;
+    min-width: 90% !important;
+}
+.tracker_button {
+    border-radius: 8px;
+    min-width: 60%;
+    text-align: center;
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.green_buttom {
+    border-radius: 8px;
+    width: 80%;
+    color: white;
+}
+.green_buttom:hover {
+    background-color: #32CD32 !important; /* Lighter green for hover */
+}
+.red_buttom {
+    border-radius: 8px;
+    width: 80%;
+    color: white;
+}
+.red_buttom:hover {
+    background-color: #FF6347 !important; /* Tomato red for hover */
+}
+.confirmation_red_buttom {
+    margin-right: 10px !important;
+}
+.confirmation_red_buttom:hover {
+    background-color: #FF6347 !important;
+}
+
+/* -_-_-_-_-_-_-_-_-_-_ Footer _-_-_-_-_-_-_-_-_-_- */
+.footer-copyright {
+    font-size: 10px;
+}
+.footer-copyright i {
+    font-size: 18px;
+    margin-right: 20px;
+}
+.footer-copyright i:hover {
+    color: #A9A9A9; /* Dark grey for hover */
+}
+
+@media(min-width: 992px) {
+    .footer-copyright {
+        font-size: 18px;
+    }
+    .footer-copyright i {
+        font-size: 30px;
+        margin-right: 50px;
+    }
+}
