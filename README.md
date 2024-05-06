@@ -1,74 +1,45 @@
-<<<<<<< HEAD
-# Getting Started with Create React App
+Database
+The application, would require a database backend, I chose mongoDB for the project. The database has four collections within it;
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Directory;
 
-## Available Scripts
+The directory collection holds all the user data, records are created when a user registers on the site. Data in the collection;
 
-In the project directory, you can run:
+Name
+e-mail address
+user Name
+password (stored in hashed format for security)
+Cars;
 
-### `npm start`
+The cars collections, holds data on cars registered on the site. Users can register their cars and only registered cars are available to create maintenance records for. Data in the collection;
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Car Registration
+make
+model
+user
+e-mail Note: user & e-mail are auto populated to the DB based on logon user at the time of registration.
+Garage;
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The garages collection has a list of garages that can be used when creating a record. Only the Admin can add or edit the list of garages. Data in the collection;
 
-### `npm test`
+Garage Name
+Garage Contact Name
+Garage Contact Phone No.
+Garage Status (active, when available for selection by user)
+Maintenance;
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The maintenance collection is populated with the records created by users. Data in the collection;
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
-# ACWTCoursework
->>>>>>> efb7220d52689703e48e9241c050aa43e8d05f77
+Car Registration (user can only select pre-registered cars under their username)
+Car make - Populated from Car collection based on reg number selected
+Car Model - same as car make.
+username - based on the user logged when the record is created
+Service Date - user input as the time of record creation
+Service cost - user input as the time of record creation
+Service Paid - user input as the time of record creation, can be yes / no
+Service Description - - user input at the time of record creation short description of service
+Odometer Reading - user input as the time of record creation
+Garage Name - selected from list of active garages in garage collection
+Garage Contact - populated from Garage collection based on reg number selected
+Garage Phone No. - as garage name above
+Service Items - as garage name above
