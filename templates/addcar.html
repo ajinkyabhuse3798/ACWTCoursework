@@ -12,9 +12,10 @@
                     <div class="col s12 m6">
                         <div class="input-field">
                             <i class="fas fa-pencil-alt prefix teal-text"></i>
-                            <input placeholder="Car Reg (in form 131-A-123456)." id="reg_no" name="reg_no" type="text"
-                                class="validate" required>
+                            <input placeholder="Car Reg (Format: AA 11 BBB)." id="reg_no" name="reg_no" type="text"
+                                 class="validate" required pattern="[A-Z]{2} \d{2} [A-Z]{3}">
                             <label for="reg_no" class="teal-text text-darken-2">Car Registration Number</label>
+
                         </div>
                     </div>
                     <div class="col s6 m3">
