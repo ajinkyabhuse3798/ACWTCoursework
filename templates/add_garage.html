@@ -1,86 +1,51 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <h3 class="teal-text text-darken-4 center-align text-shadow">Manage Garages</h3>
-
-    <div class="row">
-        <form class="col s12 m10 offset-m1 l6 offset-l3" method="POST" action="{{ url_for('add_garage') }}">
-            <div class="row"></div>
-            <div class="row">
-                <h4 class="teal-text text-darken-2 center-align">Add Garages</h4>
-                <div class="col s12 m12">
-                    <div class="input-field">
-                        <i class="fas fa-warehouse prefix teal-text"></i>
-                        <input placeholder="Name of Garage" id="garage_name" name="garage_name" type="text" class="validate"
-                            required>
-                        <label for="make" class="teal-text">Garage Name</label>
-                    </div>
-                </div>
-                <div class="col s12 m12">
-                    <div class="input-field">
-                        <i class="fas fa-id-badge prefix teal-text"></i>
-                        <input placeholder="Contact name for garage" id="garage_contact" name="garage_contact" type="text"
-                            class="validate" required>
-                        <label for="garage_contact" class="teal-text">Contact Name</label>
-                    </div>
-                </div>
-                <div class="col s12 m12">
-                    <div class="input-field">
-                        <i class="fas fa-phone prefix teal-text"></i>
-                        <input placeholder="Contact phone no." id="garage_phone" name="garage_phone" type="number"
-                            class="validate" required>
-                        <label for="garage_phone" class="teal-text">Contact Number</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <button type="submit" class="col s8 offset-s2 m4 offset-m4 l4 offset-l4 btn teal darken-2">
-                    Register Garage <i class="fas fa-plus"></i>
-                </button>
-            </div>
-        </form>
-        <div class="row"></div>
+<div class="container">
+    <h2>Add New Maintenance Record</h2>
+    <form action="{{ url_for('add_record') }}" method="post">  <!-- Make sure this points to the correct Flask route that handles form submission -->
         <div class="row">
-            <ul class="collapsible col s12 m10 offset-m1 l6 offset-l3">
-                <li class="active">
-                    <div class="collapsible-header teal-text text-darken-2 center-align chevron">
-                        <h5>List of Garages <i class="fas fa-chevron-up chevron_icon"></i></h5>
-                    </div>
-                    <div class="collapsible-body">
-
-                        <table class="striped responsive-table">
-                            <thead>
-                                <tr class="teal darken-2 center-align white-text">
-                                    <th>Name</th>
-                                    <th>Contact Name</th>
-                                    <th>Contact No.</th>
-                                    <th class="center-align">Status</th>
-                                </tr>
-                            </thead>
-
-                            <body>
-                                {% for garage in lst_garages %}
-                                <tr>
-                                    <td>{{ garage.garage_name }}</td>
-                                    <td>{{ garage.garage_contact }}</td>
-                                    <td>{{ garage.garage_phone }}</td>
-                                    {% if garage.garage_status == "active" %}
-                                        <td class="center-align">
-                                            <a href="{{ url_for('deactivate_garage', garage_id=garage._id) }}"
-                                                class="btn-small red accent-4 red_buttom">Deactivate</a>
-                                        </td>
-                                    {% else %}
-                                        <td class="center-align">
-                                            <a href="{{ url_for('activate_garage', garage_id=garage._id) }}"
-                                                class="btn-small green accent-4 green_buttom">Activate</a>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                                {% endfor %}
-                            </body>
-                        </table>
-                    </div>
-                </li>
-            </ul>
+            <div class="input-field col s12">
+                <input id="reg_no" type="text" class="validate" required>
+                <label for="reg_no">Registration Number</label>
+            </div>
+            <div class="input-field col s12">
+                <!-- Dropdown for selecting garage -->
+                <select id="garage_name" name="garage_name" class="validate" required>
+                    <option value="" disabled selected>Choose your garage</option>
+                    {% for garage in garages %}
+                    <option value="{{ garage.garage_name }}">{{ garage.garage_name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="garage_name">Garage / Service Center</label>
+            </div>
+            <div class="input-field col s6">
+                <input type="date" id="service_date" name="service_date" class="validate" required>
+                <label for="service_date">Service Date</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="odometer_reading" type="number" name="odometer_reading" class="validate" required>
+                <label for="odometer_reading">Odometer Reading (Km)</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="cost" type="number" name="cost" class="validate" required>
+                <label for="cost">Service Cost (No currency symbol)</label>
+            </div>
+            <div class="input-field col s6">
+                <label>
+                    <input type="checkbox" name="invoice_paid" />
+                    <span>Invoice Paid</span>
+                </label>
+            </div>
+            <div class="input-field col s12">
+                <textarea id="service_desc" name="service_desc" class="materialize-textarea" required></textarea>
+                <label for="service_desc">Service Work - Summary</label>
+            </div>
+            <div class="input-field col s12">
+                <a href="{{ url_for('add_garage') }}" class="btn waves-effect waves-light">Add New Garage</a>
+                <button type="submit" class="btn waves-effect waves-light right">Submit Record</button>
+            </div>
         </div>
-    </div>
+    </form>
+</div>
 {% endblock %}
