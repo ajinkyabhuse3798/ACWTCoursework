@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
-
+import json
 
 app = Flask(__name__)
 
@@ -45,22 +45,21 @@ def login():
 
 @app.route("/tracker")
 def tracker():
-    if session:
-        if session["user"] == "admin":
-            user_cars = list(mongo.db.cars.find())
-            logs = list(mongo.db.maintenance.find().sort("service_date", -1))
-            return render_template(
-                "tracker.html", logs=logs, user_cars=user_cars)
+    if 'user' not in session:
+        flash("Login to site required")
+        return redirect(url_for("login"))
 
-        else:
-            user_cars = list(mongo.db.cars.find(
-                {"user": session["user"]}))
-            logs = list(mongo.db.maintenance.find().sort("service_date", -1))
-            return render_template(
-                "tracker.html", logs=logs, user_cars=user_cars)
+    if session["user"] == admin_username:
+        # Admin can view all cars and all logs
+        user_cars = list(mongo.db.cars.find())
+        logs = list(mongo.db.maintenance.find().sort("service_date", -1))
+    else:
+        # Regular users see only their cars and their logs
+        user_cars = list(mongo.db.cars.find({"user": session["user"]}))
+        logs = list(mongo.db.maintenance.find({"username": session["user"]}).sort("service_date", -1))
+    
+    return render_template("tracker.html", logs=logs, user_cars=user_cars)
 
-    flash("Login to site required")
-    return redirect(url_for("login"))
 
 
 @app.route("/detailed_record<record_id>")
@@ -75,25 +74,19 @@ def detailed_record(record_id):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        user_taken = mongo.db.directory.find_one(
-            {"username": request.form.get("username").lower()})
-
-        if user_taken:
-            flash("Selected username is already assigned")
+        if mongo.db.directory.find_one({"username": request.form.get("username").lower()}):
+            flash("Username already taken")
             return redirect(url_for("register"))
-
         register = {
             "name": request.form.get("name"),
             "email": request.form.get("email"),
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
-        print(register)
         mongo.db.directory.insert_one(register)
-
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
-        return redirect(url_for("userprofile", username=session["user"]))
+        return redirect(url_for("tracker"))
     return render_template("register.html")
 
 
@@ -116,49 +109,63 @@ def userprofile(username):
 
 
 # add a new maintenance record to the DB.
-@app.route("/add_record", methods=["GET", "POST"])
+@app.route('/add_record', methods=['GET', 'POST'])
 def add_record():
-    if session:
-        if request.method == "POST":
-            car_details = mongo.db.cars.find_one(
-                {"reg_no": request.form.get("reg_no")})
-            make = car_details["make"]
-            model = car_details["model"]
+    if 'user' not in session:
+        flash("Login to site required")
+        return redirect(url_for("login"))
+    
+    if session.get('user') != admin_username:
+        flash("Administrator access required")
+        return redirect(url_for("tracker"))
 
-            garage_details = mongo.db.garage.find_one(
-                {"garage_name": request.form.get("garage_name")})
-            contact = garage_details["garage_contact"]
-            phone = garage_details["garage_phone"]
+    if request.method == "POST":
+        car_details = mongo.db.cars.find_one({"reg_no": request.form.get("reg_no")})
+        if not car_details:
+            flash("No car found with that registration number.")
+            return redirect(url_for('add_record'))
 
-            paid = "yes" if request.form.get("service_paid") else "no"
+        # Retrieve the username from the car details
+        car_owner_username = car_details['user']
 
-            details = {
-                "reg_no": request.form.get("reg_no"),
-                "username": session["user"],
-                "service_date": request.form.get("service_date"),
-                "service_cost": request.form.get("service_cost"),
-                "service_desc": request.form.get("service_desc"),
-                "service_paid": paid,
-                "odometer_reading": request.form.get("odometer_reading"),
-                "car_make": make,
-                "car_model": model,
-                "garage_name": request.form.get("garage_name"),
-                "garage_contact": contact,
-                "garage_phone": phone,
-                "service_items": request.form.getlist("service_items")
-            }
+        make = car_details.get("make", "Unknown Make")
+        model = car_details.get("model", "Unknown Model")
+        garage_name = request.form.get("garage_name")
+        garage_details = {
+            "Speedy Repairs": {"contact": "John Doe", "phone": "555-0101"},
+            "Fix-It-Quick": {"contact": "Jane Smith", "phone": "555-0202"},
+            "Trusty Auto Service": {"contact": "Mike Brown", "phone": "555-0404"}
+        }
+        garage_info = garage_details.get(garage_name, {"contact": "Unknown", "phone": "No Contact"})
+        paid = "yes" if request.form.get("service_paid") else "no"
 
-            mongo.db.maintenance.insert_one(details)
-            flash("Maintenance recorded added")
-            return redirect(url_for("tracker"))
+        details = {
+            "reg_no": request.form.get("reg_no"),
+            "username": car_owner_username,  # Use the car owner's username
+            "service_date": request.form.get("service_date"),
+            "service_cost": request.form.get("service_cost"),
+            "service_desc": request.form.get("service_desc"),
+            "service_paid": paid,
+            "odometer_reading": request.form.get("odometer_reading"),
+            "car_make": make,
+            "car_model": model,
+            "garage_name": garage_name,
+            "garage_contact": garage_info["contact"],
+            "garage_phone": garage_info["phone"],
+            "service_items": request.form.getlist("service_items")
+        }
 
-        cars = mongo.db.cars.find({"user": session["user"]})
-        garages = mongo.db.garage.find(
-            {"garage_status": "active"}).sort("garage_name", 1)
-        return render_template("add_record.html", cars=cars, garages=garages)
-    flash("Login to site required")
-    return redirect(url_for("login"))
+        mongo.db.maintenance.insert_one(details)
+        flash("Maintenance record added for " + car_owner_username)
+        return redirect(url_for("tracker"))
 
+    cars = list(mongo.db.cars.find())
+    garages = [
+        {"garage_name": "Speedy Repairs", "garage_contact_name": "John Doe", "garage_contact_phone": "555-0101"},
+        {"garage_name": "Fix-It-Quick", "garage_contact_name": "Jane Smith", "garage_contact_phone": "555-0202"},
+        {"garage_name": "Trusty Auto Service", "garage_contact_name": "Mike Brown", "garage_contact_phone": "555-0404"}
+    ]
+    return render_template("add_record.html", cars=cars, garages=garages)
 
 # edit a maintenance record.
 @app.route("/edit_record<record_id>", methods=["GET", "POST"])
