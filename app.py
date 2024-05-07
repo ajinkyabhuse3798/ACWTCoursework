@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 
 
-app.secret_key = '1234'  # Use a strong secret key
+app.secret_key = '1234' 
 app.config["MONGO_DBNAME"] = "car_maintenance"
 app.config["MONGO_URI"] = "mongodb://localhost:27017/car_maintenance"
 
