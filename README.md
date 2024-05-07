@@ -1,5 +1,5 @@
 Database
-The application, would require a database backend, I chose mongoDB for the project. The database has four collections within it;
+The application, would require a database backend, We chose mongoDB for the project. The database has four collections within it;
 
 Directory;
 
