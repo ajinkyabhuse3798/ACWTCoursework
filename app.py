@@ -12,11 +12,17 @@ import json
 app = Flask(__name__)
 
 
+
 app.secret_key = '1234'  # Use a strong secret key
 app.config["MONGO_DBNAME"] = "car_maintenance"
 app.config["MONGO_URI"] = "mongodb://localhost:27017/car_maintenance"
 
 mongo = PyMongo(app)
+
+
+with open('config.json', 'r') as config_file:
+    config = json.load(config_file)
+admin_username = config['admin_username']
 
 
 @app.route("/")
@@ -318,5 +324,5 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     app.run(host='0.0.0.0', port=5000, debug=True)
