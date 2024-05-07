@@ -1,3 +1,12 @@
+Admin acess - Admin1 
+password - Surrey2023
+
+TO run the application  - 
+docker run cmc 
+or 
+python app.py (locally)
+
+
 Database
 The application, would require a database backend, We chose mongoDB for the project. The database has four collections within it;
 
@@ -20,7 +29,7 @@ user
 e-mail Note: user & e-mail are auto populated to the DB based on logon user at the time of registration.
 Garage;
 
-The garages collection has a list of garages that can be used when creating a record. Only the Admin can add or edit the list of garages. Data in the collection;
+The garages collection has a predefined list  of garages that can be used when creating a record. Only the Admin can add or edit the list of garages. Data in the collection;
 
 Garage Name
 Garage Contact Name
