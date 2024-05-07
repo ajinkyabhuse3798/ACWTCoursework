@@ -40,14 +40,11 @@ Maintenance;
 The maintenance collection is populated with the records created by users. Data in the collection;
 
 Car Registration (user can only select pre-registered cars under their username)
-Car make - Populated from Car collection based on reg number selected
-Car Model - same as car make.
-username - based on the user logged when the record is created
-Service Date - user input as the time of record creation
-Service cost - user input as the time of record creation
-Service Paid - user input as the time of record creation, can be yes / no
-Service Description - - user input at the time of record creation short description of service
-Odometer Reading - user input as the time of record creation
+Service Date - admin entres the date of delivery  
+Service cost - admin entres cost 
+Service Paid - if the cost is already oaid 
+Service Description - - admin entres after checking the car
+Odometer Reading - admin entres after checking the car
 Garage Name - selected from list of active garages in garage collection
 Garage Contact - populated from Garage collection based on reg number selected
 Garage Phone No. - as garage name above
