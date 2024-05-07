@@ -5,24 +5,22 @@
         <form class="col s12 m10 offset-m1 l6 offset-l3" method="POST" action="{{ url_for('add_record') }}">
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="fas fa-bars prefix teal-text"></i>
-                    <select id="reg_no" name="reg_no" class="validate select_car" required>
-                        <option value="reg_no" disabled selected>Choose Car</option>
+                    <select id="reg_no" name="reg_no" required>
+                        <option value="" disabled selected>Choose your car</option>
                         {% for car in cars %}
-                            <option value="{{ car.reg_no }}">{{ car.reg_no }}</option>
+                            <option value="{{ car['reg_no'] }}">{{ car['reg_no'] }}</option>
                         {% endfor %}
-                        <label for="reg_no"></label>
                     </select>
+                    <label>Car Registration Number</label>
                 </div>
                 <div class="input-field col s12">
-                    <i class="fas fa-bars prefix teal-text"></i>
-                    <select id="garage_name" name="garage_name" class="validate select_garage" required>
-                        <option value="" disabled selected>Garage / Service Center</option>
-                        {% for gar in garages %}
-                            <option value="{{ gar.garage_name }}">{{ gar.garage_name }}</option>
+                    <select id="garage_name" name="garage_name" required>
+                        <option value="" disabled selected>Choose Garage / Service Center</option>
+                        {% for garage in garages %}
+                            <option value="{{ garage['garage_name'] }}">{{ garage['garage_name'] }}</option>
                         {% endfor %}
-                        <label for="garage_name"></label>
                     </select>
+                    <label>Garage / Service Center</label>
                 </div>
             </div>
             <div class="row">
@@ -100,4 +98,13 @@
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, {});
+    });
+</script>
 {% endblock %}
