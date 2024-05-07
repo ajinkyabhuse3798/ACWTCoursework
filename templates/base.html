@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
     {% endblock %}
-    <title>Check My Car</title>
+    <title>Car Maintenance Tracker</title>
 </head>
 
 <body>
@@ -20,9 +20,11 @@
         <nav class="navbar-extended teal darken-4">
             <div class="nav-wrapper">
                 {% if session.user %}
-                <a href="{{ url_for('tracker') }}" class="fas fa-car"><span class="header-title">Check My Car</span></a>
+                <a href="{{ url_for('tracker') }}" class="fas fa-car"><span class="header-title">Car Maintenance
+                        Tracker</span></a>
                 {% else %}
-                <a href="{{ url_for('login') }}" class="fas fa-car"><span class="header-title">Check My Car</span></a>
+                <a href="{{ url_for('login') }}" class="fas fa-car"><span class="header-title">Car Maintenance
+                        Tracker</span></a>
                 {% endif %}
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
@@ -46,18 +48,19 @@
         <!-- Nav bar for mobile.-->
         <ul class="sidenav" id="mobile-demo">
             <li>
-                <h5 class="center-align white-text">Check My Car</h5>
+                <h5 class="center-align white-text">Car Maintenance Tracker</h5>
             </li>
             {% if session.user %}
                 <li><a class="white-text" href="{{ url_for('tracker') }}">Maintenance Records</a></li>
                 <li><a class="white-text" href="{{ url_for('add_record') }}">Add Record</a></li>
-                <li><a class="white-text" href="{{ url_for('userprofile', username=session['user']) }}">User Profile</a></li>
+                <li><a class="white-text" href="{{ url_for('userprofile', username=session['user']) }}">User Profile</a>
+                </li>
                 <li><a class="white-text" href="{{ url_for('addcar', username=session['user']) }}">Register Car</a></li>
             {% if session.user|lower == "admin"|lower or session.user|lower == "administrator" %}
                 <li><a class="white-text" href="{{ url_for('add_garage') }}">Manage Garages</a></li>
             {% endif %}
                 <li><a class="white-text" href="{{ url_for('logout') }}">Logout</a></li>
-            {% else %}
+            {% else %}>
                 <li><a class="white-text" href="{{ url_for('login') }}">Login</a></li>
                 <li><a class="white-text" href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
@@ -85,8 +88,8 @@
         <div class="container">
             <div class="row footer-copyright">
                 <div class="col s12 m6">
-                    Check My Car <br>
-                    © 2024 All rights reserved To CheckMyCar 
+                    Car Maintenance Tracker <br>
+                    © 2021 All rights reserved
                 </div>
                 <div class="col s12 m6">
                     <a class="grey-text text-lighten-4 right" href="https://www.facebook.com/" target="_blank"><i
@@ -98,6 +101,9 @@
                     <a class="grey-text text-lighten-4 right" href="https://www.instagram.com/" target="_blank"><i
                             class="fab fa-instagram footericons" aria-hidden="true"></i> <span class="sr-only">Instagram
                             link.</span></a>
+                    <a class="grey-text text-lighten-4 right" href="https://www.youtube.com/" target="_blank"><i
+                            class="fab fa-youtube-square footericons" aria-hidden="true"></i> <span
+                            class="sr-only">Youtube link.</span></a>
                 </div>
             </div>
         </div>
